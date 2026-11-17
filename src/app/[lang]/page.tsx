@@ -1,7 +1,8 @@
-import Link from "next/link";
+import { notFound } from "next/navigation";
 import ContactForm from "@/components/ContactForm";
 import TechIcon from "@/components/TechIcon";
-import { education, experience, profile, projects, publications, skills } from "@/content";
+import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
+import { getDictionary, hasLocale, person } from "@/content";
 
 function highlightSelf(authors: string) {
   const [before, after] = authors.split("Bopp N.");
@@ -15,62 +16,56 @@ function highlightSelf(authors: string) {
   );
 }
 
-export default function Home() {
+export default async function Home({ params }: PageProps<"/[lang]">) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const t = getDictionary(lang);
+  const current = t.experience.filter((r) => r.since);
+
   return (
     <>
       <a className="skip-link" href="#main">
-        Skip to content
+        {t.ui.skip}
       </a>
       <div className="page">
-        <header className="site-header">
-          <a className="wordmark" href="#top">
-            {profile.name}
-          </a>
-          <nav className="site-nav" aria-label="Sections">
-            <a href="#skills">Skills</a>
-            <a href="#work">Work</a>
-            <a href="#experience">Experience</a>
-            <a href="#publications">Publications</a>
-            <a href="#contact">Contact</a>
-          </nav>
-        </header>
+        <SiteHeader lang={lang} t={t} sections />
 
         <main id="main">
           <section className="hero" id="top" aria-labelledby="hero-title">
             <div>
-              <h1 id="hero-title">{profile.name}</h1>
-              <p className="role">{profile.role}</p>
-              <p className="location">{profile.location}</p>
-              <p className="intro">{profile.intro}</p>
+              <h1 id="hero-title">{person.name}</h1>
+              <p className="role">{t.profile.role}</p>
+              <p className="location">{t.profile.location}</p>
+              <p className="intro">{t.profile.intro}</p>
               <p className="links">
-                <a href={profile.linkedin}>LinkedIn</a>
-                <a href={profile.github}>GitHub</a>
-                <a href="#contact">Get in touch</a>
+                <a href={person.linkedin}>LinkedIn</a>
+                <a href={person.github}>GitHub</a>
+                <a href="#contact">{t.ui.getInTouch}</a>
               </p>
             </div>
-            <aside className="current" aria-labelledby="current-title">
-              <h2 id="current-title">Currently</h2>
-              <ul>
-                {experience
-                  .filter((r) => r.period.includes("present"))
-                  .map((r) => (
+            {current.length > 0 && (
+              <aside className="current" aria-labelledby="current-title">
+                <h2 id="current-title">{t.ui.currently}</h2>
+                <ul>
+                  {current.map((r) => (
                     <li key={r.title}>
                       <p className="current-title">{r.title}</p>
                       <p className="current-org">
-                        {r.org}, since {r.period.replace(" – present", "")}
+                        {r.org}, {t.ui.since} {r.since}
                       </p>
                     </li>
                   ))}
-              </ul>
-            </aside>
+                </ul>
+              </aside>
+            )}
           </section>
 
           <section className="section" id="skills" aria-labelledby="skills-title">
-            <h2 id="skills-title">Skills</h2>
+            <h2 id="skills-title">{t.ui.sections.skills}</h2>
             <div className="section-body">
               <table className="skills">
                 <tbody>
-                  {skills.map((s) => (
+                  {t.skills.map((s) => (
                     <tr key={s.area}>
                       <th scope="row">{s.area}</th>
                       <td>
@@ -91,10 +86,10 @@ export default function Home() {
           </section>
 
           <section className="section" id="work" aria-labelledby="work-title">
-            <h2 id="work-title">Selected work</h2>
+            <h2 id="work-title">{t.ui.sections.work}</h2>
             <div className="section-body">
               <ul className="projects">
-                {projects.map((p) => (
+                {t.projects.map((p) => (
                   <li className="project" key={p.title}>
                     <span className="period">{p.period}</span>
                     <div>
@@ -104,7 +99,7 @@ export default function Home() {
                       </h3>
                       <p className="context">{p.context}</p>
                       <p className="summary">{p.summary}</p>
-                      <ul className="stack" aria-label="Technologies">
+                      <ul className="stack" aria-label={t.ui.technologies}>
                         {p.stack.map((s) => (
                           <li key={s}>
                             <TechIcon name={s} />
@@ -129,11 +124,11 @@ export default function Home() {
           </section>
 
           <section className="section" id="experience" aria-labelledby="exp-title">
-            <h2 id="exp-title">Experience</h2>
+            <h2 id="exp-title">{t.ui.sections.experience}</h2>
             <div className="section-body">
               <ol className="timeline">
-                {experience.map((r) => (
-                  <li key={r.title} className={r.period.includes("present") ? "current" : undefined}>
+                {t.experience.map((r) => (
+                  <li key={r.title} className={r.since ? "current" : undefined}>
                     <h3>{r.title}</h3>
                     <p className="meta">
                       {r.org}, {r.period}
@@ -142,9 +137,9 @@ export default function Home() {
                   </li>
                 ))}
               </ol>
-              <h3 className="subhead">Education</h3>
+              <h3 className="subhead">{t.ui.sections.education}</h3>
               <ol className="timeline">
-                {education.map((r) => (
+                {t.education.map((r) => (
                   <li key={r.title}>
                     <h3>{r.title}</h3>
                     <p className="meta">
@@ -159,10 +154,10 @@ export default function Home() {
           </section>
 
           <section className="section" id="publications" aria-labelledby="pub-title">
-            <h2 id="pub-title">Publications</h2>
+            <h2 id="pub-title">{t.ui.sections.publications}</h2>
             <div className="section-body">
-              {publications.map((p) => (
-                <article className="citation" key={p.doi}>
+              {t.publications.map((p) => (
+                <article className="citation" key={p.doi} lang="en">
                   <h3 className="title">
                     <a href={p.href}>{p.title}</a>
                   </h3>
@@ -179,23 +174,18 @@ export default function Home() {
           </section>
 
           <section className="section" id="contact" aria-labelledby="contact-title">
-            <h2 id="contact-title">Contact</h2>
+            <h2 id="contact-title">{t.ui.sections.contact}</h2>
             <div className="section-body">
-              <p className="lede">
-                Questions about a project, research collaboration or a role: write me and I will reply by email.
-              </p>
-              <ContactForm />
+              <p className="lede">{t.ui.contactLede}</p>
+              <ContactForm lang={lang} t={t.form} />
               <p className="contact-alt">
-                Or reach me on <a href={profile.linkedin}>LinkedIn</a>.
+                {t.ui.contactAlt} <a href={person.linkedin}>LinkedIn</a>.
               </p>
             </div>
           </section>
         </main>
 
-        <footer className="site-footer">
-          <span>© 2026 {profile.name}</span>
-          <Link href="/privacy">Privacy</Link>
-        </footer>
+        <SiteFooter lang={lang} t={t} />
       </div>
     </>
   );

@@ -13,6 +13,29 @@ function rateLimited(ip: string) {
   return hits.length > 5;
 }
 
+const MESSAGES = {
+  en: {
+    unreadable: "The form could not be read. Reload the page and try again.",
+    name: "Enter your name (up to 120 characters).",
+    email: "Enter a valid email address so I can reply.",
+    short: "Write a message of at least 10 characters.",
+    long: "Shorten the message to 5000 characters or fewer.",
+    rate: "Too many messages from this connection. Try again in ten minutes.",
+    unavailable: "The contact form is not available right now. Use LinkedIn instead.",
+    failed: "The message could not be sent. Try again later or use LinkedIn.",
+  },
+  de: {
+    unreadable: "Das Formular konnte nicht gelesen werden. Laden Sie die Seite neu und versuchen Sie es erneut.",
+    name: "Geben Sie Ihren Namen ein (höchstens 120 Zeichen).",
+    email: "Geben Sie eine gültige E-Mail-Adresse ein, damit ich antworten kann.",
+    short: "Schreiben Sie eine Nachricht mit mindestens 10 Zeichen.",
+    long: "Kürzen Sie die Nachricht auf höchstens 5000 Zeichen.",
+    rate: "Zu viele Nachrichten von dieser Verbindung. Versuchen Sie es in zehn Minuten erneut.",
+    unavailable: "Das Kontaktformular ist gerade nicht verfügbar. Schreiben Sie mir stattdessen auf LinkedIn.",
+    failed: "Die Nachricht konnte nicht gesendet werden. Versuchen Sie es später erneut oder schreiben Sie mir auf LinkedIn.",
+  },
+};
+
 function bad(message: string, status = 400) {
   return Response.json({ error: message }, { status });
 }
@@ -22,8 +45,9 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return bad("The form could not be read. Reload the page and try again.");
+    return bad(MESSAGES.en.unreadable);
   }
+  const m = body.lang === "de" ? MESSAGES.de : MESSAGES.en;
 
   const name = String(body.name ?? "").trim();
   const email = String(body.email ?? "").trim();
@@ -36,18 +60,18 @@ export async function POST(request: Request) {
     return Response.json({ ok: true });
   }
 
-  if (!name || name.length > 120) return bad("Enter your name (up to 120 characters).");
-  if (!EMAIL_RE.test(email) || email.length > 200) return bad("Enter a valid email address so I can reply.");
-  if (message.length < 10) return bad("Write a message of at least 10 characters.");
-  if (message.length > 5000) return bad("Shorten the message to 5000 characters or fewer.");
+  if (!name || name.length > 120) return bad(m.name);
+  if (!EMAIL_RE.test(email) || email.length > 200) return bad(m.email);
+  if (message.length < 10) return bad(m.short);
+  if (message.length > 5000) return bad(m.long);
 
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (rateLimited(ip)) return bad("Too many messages from this connection. Try again in ten minutes.", 429);
+  if (rateLimited(ip)) return bad(m.rate, 429);
 
   const { RESEND_API_KEY, CONTACT_TO, CONTACT_FROM } = process.env;
   if (!RESEND_API_KEY || !CONTACT_TO || !CONTACT_FROM) {
     console.error("Contact form is not configured: set RESEND_API_KEY, CONTACT_TO and CONTACT_FROM.");
-    return bad("The contact form is not available right now. Use LinkedIn instead.", 503);
+    return bad(m.unavailable, 503);
   }
 
   const resend = new Resend(RESEND_API_KEY);
@@ -61,7 +85,7 @@ export async function POST(request: Request) {
 
   if (error) {
     console.error("Resend error", error);
-    return bad("The message could not be sent. Try again later or use LinkedIn.", 502);
+    return bad(m.failed, 502);
   }
   return Response.json({ ok: true });
 }

@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
+import type { Dictionary, Locale } from "@/content";
 import styles from "./ContactForm.module.css";
 
 type State = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string };
 
-export default function ContactForm() {
+export default function ContactForm({ lang, t }: { lang: Locale; t: Dictionary["form"] }) {
   const [state, setState] = useState<State>({ kind: "idle" });
   const startedAt = useRef<number>(0);
 
@@ -19,24 +20,24 @@ export default function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, startedAt: startedAt.current }),
+        body: JSON.stringify({ ...data, lang, startedAt: startedAt.current }),
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setState({ kind: "error", message: json.error ?? "The message could not be sent. Try again later." });
+        setState({ kind: "error", message: json.error ?? t.genericError });
         return;
       }
       form.reset();
       setState({ kind: "sent" });
     } catch {
-      setState({ kind: "error", message: "No connection. Check your network and send again." });
+      setState({ kind: "error", message: t.offline });
     }
   }
 
   if (state.kind === "sent") {
     return (
       <p className={styles.sent} role="status">
-        Message sent. I will reply to the address you entered.
+        {t.sent}
       </p>
     );
   }
@@ -48,20 +49,19 @@ export default function ContactForm() {
       onFocus={() => {
         if (!startedAt.current) startedAt.current = Date.now();
       }}
-      noValidate={false}
     >
       <div className={styles.row}>
         <label className={styles.field}>
-          <span>Name</span>
+          <span>{t.name}</span>
           <input name="name" autoComplete="name" required maxLength={120} />
         </label>
         <label className={styles.field}>
-          <span>Email</span>
+          <span>{t.email}</span>
           <input name="email" type="email" autoComplete="email" required maxLength={200} />
         </label>
       </div>
       <label className={styles.field}>
-        <span>Message</span>
+        <span>{t.message}</span>
         <textarea name="message" rows={6} required minLength={10} maxLength={5000} />
       </label>
       {/* Honeypot: hidden from people and assistive tech, filled in by naive bots. */}
@@ -73,7 +73,7 @@ export default function ContactForm() {
       </div>
       <div className={styles.actions}>
         <button type="submit" disabled={state.kind === "sending"}>
-          {state.kind === "sending" ? "Sending message" : "Send message"}
+          {state.kind === "sending" ? t.sending : t.send}
         </button>
         {state.kind === "error" && (
           <p className={styles.error} role="alert">
@@ -82,8 +82,7 @@ export default function ContactForm() {
         )}
       </div>
       <p className={styles.note}>
-        Your name, email and message are sent to me by email and not stored on this site. See the{" "}
-        <Link href="/privacy">privacy notice</Link>.
+        {t.note} <Link href={`/${lang}/privacy`}>{t.privacyLink}</Link>.
       </p>
     </form>
   );

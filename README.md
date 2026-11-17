@@ -1,7 +1,7 @@
 # Portfolio
 
-Personal site of Nicolas Bopp: projects, publications, experience, skills and a contact
-form.
+Personal site of Nicolas Bopp: projects, publications, experience, skills, a contact form,
+privacy notice and imprint.
 
 Built with Next.js (App Router) and TypeScript.
 
@@ -26,8 +26,13 @@ The site works without any environment variables; only the contact form needs Re
 
 ## Content
 
-All copy lives in [`src/content.ts`](src/content.ts): profile, projects, publications,
-experience, education and skills. Technology icons come from
+The site is available in English (`/en`) and German (`/de`); visitors are sent to the language their
+browser prefers. All copy lives in [`src/content/en.ts`](src/content/en.ts) and
+[`src/content/de.ts`](src/content/de.ts): profile, projects, experience, education, skills, privacy
+notice and imprint. Facts shared by both languages are in [`src/content/shared.ts`](src/content/shared.ts).
+
+The image shown when the link is shared (LinkedIn, WhatsApp) is generated per language from
+[`src/app/[lang]/opengraph-image.tsx`](src/app/%5Blang%5D/opengraph-image.tsx). Technology icons come from
 [Simple Icons](https://simpleicons.org).
 
 ## Deploy

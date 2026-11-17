@@ -130,6 +130,42 @@ a:hover {
   text-decoration: none;
 }
 
+.header-end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0.5rem 2rem;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 0.15rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.lang-switch a,
+.lang-switch span {
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.lang-switch a {
+  color: var(--muted);
+}
+
+.lang-switch a:hover {
+  color: var(--ink);
+  background: var(--rule);
+}
+
+.lang-switch [aria-current] {
+  color: var(--on-accent);
+  background: var(--accent);
+}
+
 .site-nav {
   display: flex;
   flex-wrap: wrap;
@@ -508,6 +544,11 @@ a:hover {
   font-size: 0.9375rem;
 }
 
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
 /* Prose pages */
 
 .prose {
@@ -527,8 +568,13 @@ a:hover {
   margin: 2rem 0 0.5rem;
 }
 
-.prose p + p {
-  margin-top: 0.75rem;
+.prose-body {
+  white-space: pre-line;
+}
+
+.prose-back {
+  margin-top: 2.5rem;
+  font-weight: 600;
 }
 
 /* Responsive */
@@ -547,7 +593,12 @@ a:hover {
 @media (max-width: 640px) {
   .site-header {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
+  }
+
+  .header-end {
+    flex-direction: column-reverse;
+    align-items: flex-start;
   }
 
   .project {
