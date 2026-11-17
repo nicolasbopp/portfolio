@@ -31,6 +31,7 @@ export const en: Dictionary = {
       contact: "Contact",
     },
     technologies: "Technologies",
+    backToTop: "Back to top",
     contactLede: "Questions about a project, research collaboration or a role: write me and I will reply by email.",
     contactAlt: "Or reach me on",
     footer: { privacy: "Privacy", imprint: "Imprint" },

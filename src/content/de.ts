@@ -32,6 +32,7 @@ export const de: Dictionary = {
       contact: "Kontakt",
     },
     technologies: "Technologien",
+    backToTop: "Nach oben",
     contactLede:
       "Fragen zu einem Projekt, zu einer Forschungszusammenarbeit oder zu einer Stelle: Schreiben Sie mir, ich antworte per E-Mail.",
     contactAlt: "Oder erreichen Sie mich auf",

@@ -1,10 +1,13 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
-// Home-screen icon for iOS, which does not use SVG favicons.
+// Home-screen icon for iOS, which does not use SVG favicons. Matches icon.svg.
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-export default function AppleIcon() {
+export default async function AppleIcon() {
+  const display = await readFile(join(process.cwd(), "src/assets/allo-display.ttf"));
   return new ImageResponse(
     (
       <div
@@ -14,16 +17,16 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#1c7a68",
-          color: "#ffffff",
-          fontSize: 84,
-          fontWeight: 800,
-          letterSpacing: "-0.03em",
+          background: "#f2d04b",
+          color: "#1a1709",
+          fontFamily: "Allo Display",
+          fontSize: 92,
+          letterSpacing: "-0.04em",
         }}
       >
         NB
       </div>
     ),
-    size,
+    { ...size, fonts: [{ name: "Allo Display", data: display, style: "normal" }] },
   );
 }

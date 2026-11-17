@@ -1,14 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Atkinson_Hyperlegible_Next } from "next/font/google";
+import localFont from "next/font/local";
 import { alternates, getDictionary, hasLocale, locales } from "@/content";
 import { themeInitScript } from "@/lib/theme";
 import "../globals.css";
 
-const sans = Atkinson_Hyperlegible_Next({
-  subsets: ["latin", "latin-ext"],
+// Allo by Josh Puckett (SIL Open Font License), variable in optical size, weight and roundness.
+const sans = localFont({
+  src: "../../../node_modules/allo-font/fonts/webfonts/AlloVariable.woff2",
   variable: "--font-sans",
-  weight: "variable",
+  weight: "100 900",
+  display: "swap",
 });
 
 export function generateStaticParams() {
@@ -34,7 +36,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
 }
 
 export const viewport: Viewport = {
-  themeColor: "#121a20",
+  themeColor: "#15161a",
 };
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {

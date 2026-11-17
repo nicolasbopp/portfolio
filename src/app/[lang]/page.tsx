@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import ContactForm from "@/components/ContactForm";
 import TechIcon from "@/components/TechIcon";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
+import BackToTop from "@/components/BackToTop";
 import { getDictionary, hasLocale, localePath, person } from "@/content";
 
 function highlightSelf(authors: string) {
@@ -21,36 +22,41 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   if (!hasLocale(lang)) notFound();
   const t = getDictionary(lang);
   const current = t.experience.filter((r) => r.since);
+  const [first, last] = person.name.split(" ");
 
   return (
     <>
       <a className="skip-link" href="#main">
         {t.ui.skip}
       </a>
-      <div className="page">
-        <SiteHeader lang={lang} t={t} sections />
 
-        <main id="main">
+      <div className="hero-field">
+        <div className="page">
+          <SiteHeader lang={lang} t={t} sections />
           <section className="hero" id="top" aria-labelledby="hero-title">
-            <div>
-              <h1 id="hero-title">{person.name}</h1>
-              <p className="role">{t.profile.role}</p>
-              <p className="location">{t.profile.location}</p>
-              <p className="intro">{t.profile.intro}</p>
-              <p className="links">
+            <h1 id="hero-title" className="hero-name">
+              <span>{first}</span> <span>{last}</span>
+            </h1>
+            <div className="hero-about">
+              <p className="hero-role">
+                {t.profile.role}
+                <span className="hero-location">{t.profile.location}</span>
+              </p>
+              <p className="hero-intro">{t.profile.intro}</p>
+              <p className="hero-links">
                 <a href={person.linkedin}>LinkedIn</a>
                 <a href={person.github}>GitHub</a>
                 <a href="#contact">{t.ui.getInTouch}</a>
               </p>
             </div>
             {current.length > 0 && (
-              <aside className="current" aria-labelledby="current-title">
-                <h2 id="current-title">{t.ui.currently}</h2>
+              <aside className="hero-now" aria-labelledby="now-title">
+                <h2 id="now-title">{t.ui.currently}</h2>
                 <ul>
                   {current.map((r) => (
                     <li key={r.title}>
-                      <p className="current-title">{r.title}</p>
-                      <p className="current-org">
+                      <p className="now-title">{r.title}</p>
+                      <p className="now-org">
                         {r.org}, {t.ui.since} {r.since}
                       </p>
                     </li>
@@ -59,94 +65,100 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               </aside>
             )}
           </section>
+        </div>
+      </div>
 
+      <div className="page">
+        <main id="main" tabIndex={-1}>
           <section className="section" id="skills" aria-labelledby="skills-title">
-            <h2 id="skills-title">{t.ui.sections.skills}</h2>
-            <div className="section-body">
-              <table className="skills">
-                <tbody>
-                  {t.skills.map((s) => (
-                    <tr key={s.area}>
-                      <th scope="row">{s.area}</th>
-                      <td>
-                        <ul className="skill-list">
-                          {s.items.map((item) => (
-                            <li key={item}>
-                              <TechIcon name={item} />
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <h2 id="skills-title" className="section-title">
+              {t.ui.sections.skills}
+            </h2>
+            <div className="skills">
+              {t.skills.map((s) => (
+                <div className="skill-group" key={s.area}>
+                  <h3>{s.area}</h3>
+                  <ul>
+                    {s.items.map((item) => (
+                      <li key={item}>
+                        <TechIcon name={item} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </section>
 
-          <section className="section" id="work" aria-labelledby="work-title">
-            <h2 id="work-title">{t.ui.sections.work}</h2>
-            <div className="section-body">
-              <ul className="projects">
-                {t.projects.map((p) => (
-                  <li className="project" key={p.title}>
-                    <span className="period">{p.period}</span>
-                    <div>
-                      <h3>
-                        {p.title}
-                        {p.status && <span className="status">{p.status}</span>}
-                      </h3>
-                      <p className="context">{p.context}</p>
-                      <p className="summary">{p.summary}</p>
-                      <ul className="stack" aria-label={t.ui.technologies}>
-                        {p.stack.map((s) => (
-                          <li key={s}>
-                            <TechIcon name={s} />
-                            {s}
-                          </li>
+          <section className="section section-work" id="work" aria-labelledby="work-title">
+            <h2 id="work-title" className="section-title">
+              {t.ui.sections.work}
+            </h2>
+            <div className="projects">
+              {t.projects.map((p) => (
+                <article className="project" key={p.title}>
+                  <header className="project-head">
+                    <p className="project-meta">
+                      <span>{p.period}</span>
+                      {p.status && <span className="status">{p.status}</span>}
+                    </p>
+                    <h3>{p.title}</h3>
+                    <p className="project-context">{p.context}</p>
+                  </header>
+                  <div className="project-body">
+                    <p className="project-summary">{p.summary}</p>
+                    <ul className="stack" aria-label={t.ui.technologies}>
+                      {p.stack.map((s) => (
+                        <li key={s}>
+                          <TechIcon name={s} />
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                    {p.links && (
+                      <p className="project-links">
+                        {p.links.map((l) => (
+                          <a key={l.href} href={l.href}>
+                            {l.label}
+                          </a>
                         ))}
-                      </ul>
-                      {p.links && (
-                        <p className="project-links">
-                          {p.links.map((l) => (
-                            <a key={l.href} href={l.href}>
-                              {l.label}
-                            </a>
-                          ))}
-                        </p>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                      </p>
+                    )}
+                  </div>
+                </article>
+              ))}
             </div>
           </section>
 
           <section className="section" id="experience" aria-labelledby="exp-title">
-            <h2 id="exp-title">{t.ui.sections.experience}</h2>
-            <div className="section-body">
-              <ol className="timeline">
+            <h2 id="exp-title" className="section-title">
+              {t.ui.sections.experience}
+            </h2>
+            <div className="cv">
+              <ol className="cv-list">
                 {t.experience.map((r) => (
-                  <li key={r.title} className={r.since ? "current" : undefined}>
-                    <h3>{r.title}</h3>
-                    <p className="meta">
-                      {r.org}, {r.period}
-                    </p>
-                    {r.detail && <p className="detail">{r.detail}</p>}
+                  <li key={r.title} data-current={r.since ? true : undefined}>
+                    <p className="cv-period">{r.period}</p>
+                    <div>
+                      <h3>{r.title}</h3>
+                      <p className="cv-org">{r.org}</p>
+                      {r.detail && <p className="cv-detail">{r.detail}</p>}
+                    </div>
                   </li>
                 ))}
               </ol>
-              <h3 className="subhead">{t.ui.sections.education}</h3>
-              <ol className="timeline">
+              <h3 className="cv-subhead">{t.ui.sections.education}</h3>
+              <ol className="cv-list">
                 {t.education.map((r) => (
                   <li key={r.title}>
-                    <h3>{r.title}</h3>
-                    <p className="meta">
-                      {r.org}, {r.period}
-                    </p>
-                    {r.award && <p className="award">{r.award}</p>}
-                    {r.detail && <p className="detail">{r.detail}</p>}
+                    <p className="cv-period">{r.period}</p>
+                    <div>
+                      <h3>{r.title}</h3>
+                      <p className="cv-org">{r.org}</p>
+                      {r.award && <p className="cv-award">{r.award}</p>}
+                      {r.detail && <p className="cv-detail">{r.detail}</p>}
+                    </div>
                   </li>
                 ))}
               </ol>
@@ -154,18 +166,20 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           </section>
 
           <section className="section" id="publications" aria-labelledby="pub-title">
-            <h2 id="pub-title">{t.ui.sections.publications}</h2>
-            <div className="section-body">
+            <h2 id="pub-title" className="section-title">
+              {t.ui.sections.publications}
+            </h2>
+            <div>
               {t.publications.map((p) => (
                 <article className="citation" key={p.doi} lang="en">
-                  <h3 className="title">
+                  <h3>
                     <a href={p.href}>{p.title}</a>
                   </h3>
-                  <p className="authors">{highlightSelf(p.authors)}</p>
-                  <p className="venue">
+                  <p className="citation-authors">{highlightSelf(p.authors)}</p>
+                  <p className="citation-venue">
                     {p.venue}, {p.year}
                   </p>
-                  <p className="doi">
+                  <p className="citation-doi">
                     <a href={`https://doi.org/${p.doi}`}>doi:{p.doi}</a>
                   </p>
                 </article>
@@ -173,10 +187,12 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </div>
           </section>
 
-          <section className="section" id="contact" aria-labelledby="contact-title">
-            <h2 id="contact-title">{t.ui.sections.contact}</h2>
-            <div className="section-body">
-              <p className="lede">{t.ui.contactLede}</p>
+          <section className="section section-contact" id="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title" className="section-title">
+              {t.ui.sections.contact}
+            </h2>
+            <div>
+              <p className="contact-lede">{t.ui.contactLede}</p>
               <ContactForm lang={lang} t={t.form} privacyHref={localePath(lang, "/privacy")} />
               <p className="contact-alt">
                 {t.ui.contactAlt} <a href={person.linkedin}>LinkedIn</a>.
@@ -187,6 +203,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
         <SiteFooter lang={lang} t={t} />
       </div>
+      <BackToTop label={t.ui.backToTop} />
     </>
   );
 }

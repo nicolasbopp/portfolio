@@ -46,6 +46,7 @@ export type Dictionary = {
       contact: string;
     };
     technologies: string;
+    backToTop: string;
     contactLede: string;
     contactAlt: string;
     footer: { privacy: string; imprint: string };
