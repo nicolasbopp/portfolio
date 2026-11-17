@@ -26,8 +26,8 @@ The site works without any environment variables; only the contact form needs Re
 
 ## Content
 
-The site is available in English (`/en`) and German (`/de`); visitors are sent to the language their
-browser prefers. All copy lives in [`src/content/en.ts`](src/content/en.ts) and
+English is served at clean URLs (`/`, `/imprint`) and German under `/de`. Pages live in
+`src/app/[lang]`; [`src/proxy.ts`](src/proxy.ts) maps the English URLs onto them. All copy lives in [`src/content/en.ts`](src/content/en.ts) and
 [`src/content/de.ts`](src/content/de.ts): profile, projects, experience, education, skills, privacy
 notice and imprint. Facts shared by both languages are in [`src/content/shared.ts`](src/content/shared.ts).
 

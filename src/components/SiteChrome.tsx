@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { locales, person, type Dictionary, type Locale } from "@/content";
+import { localePath, locales, person, type Dictionary, type Locale } from "@/content";
 import ThemeToggle from "./ThemeToggle";
 
 const LANGUAGE_NAMES: Record<Locale, string> = { en: "English", de: "Deutsch" };
@@ -19,7 +19,7 @@ export function SiteHeader({
 }) {
   return (
     <header className="site-header">
-      <Link className="wordmark" href={sections ? "#top" : `/${lang}`}>
+      <Link className="wordmark" href={sections ? "#top" : localePath(lang)}>
         {person.name}
       </Link>
       <div className="header-end">
@@ -41,9 +41,11 @@ export function SiteHeader({
                   {l.toUpperCase()}
                 </span>
               ) : (
-                <Link key={l} href={`/${l}${path}`} hrefLang={l} lang={l} title={LANGUAGE_NAMES[l]}>
+                // A full page load on purpose: each language has its own root layout, and a
+                // client-side switch would re-render <html> and drop the saved theme.
+                <a key={l} href={localePath(l, path)} hrefLang={l} lang={l} title={LANGUAGE_NAMES[l]}>
                   {l.toUpperCase()}
-                </Link>
+                </a>
               ),
             )}
           </nav>
@@ -58,8 +60,8 @@ export function SiteFooter({ lang, t }: { lang: Locale; t: Dictionary }) {
     <footer className="site-footer">
       <span>© 2026 {person.name}</span>
       <span className="footer-links">
-        <Link href={`/${lang}/imprint`}>{t.ui.footer.imprint}</Link>
-        <Link href={`/${lang}/privacy`}>{t.ui.footer.privacy}</Link>
+        <Link href={localePath(lang, "/imprint")}>{t.ui.footer.imprint}</Link>
+        <Link href={localePath(lang, "/privacy")}>{t.ui.footer.privacy}</Link>
       </span>
     </footer>
   );
@@ -94,7 +96,7 @@ export function ProsePage({
           </section>
         ))}
         <p className="prose-back">
-          <Link href={`/${lang}`}>{t.ui.backHome}</Link>
+          <Link href={localePath(lang)}>{t.ui.backHome}</Link>
         </p>
       </main>
       <SiteFooter lang={lang} t={t} />

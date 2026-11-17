@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import ContactForm from "@/components/ContactForm";
 import TechIcon from "@/components/TechIcon";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
-import { getDictionary, hasLocale, person } from "@/content";
+import { getDictionary, hasLocale, localePath, person } from "@/content";
 
 function highlightSelf(authors: string) {
   const [before, after] = authors.split("Bopp N.");
@@ -177,7 +177,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <h2 id="contact-title">{t.ui.sections.contact}</h2>
             <div className="section-body">
               <p className="lede">{t.ui.contactLede}</p>
-              <ContactForm lang={lang} t={t.form} />
+              <ContactForm lang={lang} t={t.form} privacyHref={localePath(lang, "/privacy")} />
               <p className="contact-alt">
                 {t.ui.contactAlt} <a href={person.linkedin}>LinkedIn</a>.
               </p>

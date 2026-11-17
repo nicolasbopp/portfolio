@@ -15,6 +15,23 @@ export function hasLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
 }
 
+/** Public URL of a page: English has no prefix, other languages do (e.g. "/de/imprint"). */
+export function localePath(locale: Locale, path = ""): string {
+  if (locale === defaultLocale) return path || "/";
+  return `/${locale}${path}`;
+}
+
+/** hreflang alternates for a page, for search engines. */
+export function alternates(locale: Locale, path = "") {
+  return {
+    canonical: localePath(locale, path),
+    languages: Object.fromEntries([
+      ...locales.map((l) => [l, localePath(l, path)]),
+      ["x-default", localePath(defaultLocale, path)],
+    ]),
+  };
+}
+
 export function getDictionary(locale: Locale): Dictionary {
   return dictionaries[locale];
 }

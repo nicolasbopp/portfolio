@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProsePage } from "@/components/SiteChrome";
-import { getDictionary, hasLocale } from "@/content";
+import { alternates, getDictionary, hasLocale } from "@/content";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/privacy">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
-  return { title: `${getDictionary(lang).privacy.title}, Nicolas Bopp` };
+  return { title: `${getDictionary(lang).privacy.title}, Nicolas Bopp`, alternates: alternates(lang, "/privacy") };
 }
 
 export default async function Privacy({ params }: PageProps<"/[lang]/privacy">) {

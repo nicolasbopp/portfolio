@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Atkinson_Hyperlegible_Next } from "next/font/google";
-import { getDictionary, hasLocale, locales } from "@/content";
+import { alternates, getDictionary, hasLocale, locales } from "@/content";
 import { themeInitScript } from "@/lib/theme";
 import "../globals.css";
 
@@ -23,10 +23,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
     metadataBase: new URL(process.env.SITE_URL ?? "http://localhost:3000"),
     title: t.meta.title,
     description: t.meta.description,
-    alternates: {
-      canonical: `/${lang}`,
-      languages: { en: "/en", de: "/de", "x-default": "/en" },
-    },
+    alternates: alternates(lang),
     openGraph: {
       title: "Nicolas Bopp",
       description: t.meta.description,

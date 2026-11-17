@@ -7,7 +7,15 @@ import styles from "./ContactForm.module.css";
 
 type State = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string };
 
-export default function ContactForm({ lang, t }: { lang: Locale; t: Dictionary["form"] }) {
+export default function ContactForm({
+  lang,
+  t,
+  privacyHref,
+}: {
+  lang: Locale;
+  t: Dictionary["form"];
+  privacyHref: string;
+}) {
   const [state, setState] = useState<State>({ kind: "idle" });
   const startedAt = useRef<number>(0);
 
@@ -82,7 +90,7 @@ export default function ContactForm({ lang, t }: { lang: Locale; t: Dictionary["
         )}
       </div>
       <p className={styles.note}>
-        {t.note} <Link href={`/${lang}/privacy`}>{t.privacyLink}</Link>.
+        {t.note} <Link href={privacyHref}>{t.privacyLink}</Link>.
       </p>
     </form>
   );
