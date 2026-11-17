@@ -30,9 +30,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         {t.ui.skip}
       </a>
 
-      <div className="hero-field">
+      <SiteHeader lang={lang} t={t} sections />
+
+      <div className="hero-field" id="hero-field">
         <div className="page">
-          <SiteHeader lang={lang} t={t} sections />
           <section className="hero" id="top" aria-labelledby="hero-title">
             <h1 id="hero-title" className="hero-name">
               <span>{first}</span> <span>{last}</span>
@@ -44,9 +45,11 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               </p>
               <p className="hero-intro">{t.profile.intro}</p>
               <p className="hero-links">
+                <a className="button" href="#contact">
+                  {t.ui.getInTouch}
+                </a>
                 <a href={person.linkedin}>LinkedIn</a>
                 <a href={person.github}>GitHub</a>
-                <a href="#contact">{t.ui.getInTouch}</a>
               </p>
             </div>
             {current.length > 0 && (
@@ -70,7 +73,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
       <div className="page">
         <main id="main" tabIndex={-1}>
-          <section className="section" id="skills" aria-labelledby="skills-title">
+          <section className="section section-stacked" id="skills" aria-labelledby="skills-title">
             <h2 id="skills-title" className="section-title">
               {t.ui.sections.skills}
             </h2>
@@ -91,7 +94,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </div>
           </section>
 
-          <section className="section section-work" id="work" aria-labelledby="work-title">
+          <section className="section" id="work" aria-labelledby="work-title">
             <h2 id="work-title" className="section-title">
               {t.ui.sections.work}
             </h2>

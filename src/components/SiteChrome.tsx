@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { localePath, locales, person, type Dictionary, type Locale } from "@/content";
+import HeaderShell from "./HeaderShell";
+import SectionNav from "./SectionNav";
 import ThemeToggle from "./ThemeToggle";
 
 const LANGUAGE_NAMES: Record<Locale, string> = { en: "English", de: "Deutsch" };
@@ -17,20 +19,25 @@ export function SiteHeader({
   path?: string;
   sections?: boolean;
 }) {
+  const nav = t.ui.nav;
   return (
-    <header className="site-header">
+    <HeaderShell overHero={sections}>
+      <div className="page header-inner">
       <Link className="wordmark" href={sections ? "#top" : localePath(lang)}>
         {person.name}
       </Link>
       <div className="header-end">
         {sections && (
-          <nav className="site-nav" aria-label={t.ui.nav.label}>
-            <a href="#skills">{t.ui.nav.skills}</a>
-            <a href="#work">{t.ui.nav.work}</a>
-            <a href="#experience">{t.ui.nav.experience}</a>
-            <a href="#publications">{t.ui.nav.publications}</a>
-            <a href="#contact">{t.ui.nav.contact}</a>
-          </nav>
+          <SectionNav
+            label={nav.label}
+            links={[
+              { id: "skills", label: nav.skills },
+              { id: "work", label: nav.work },
+              { id: "experience", label: nav.experience },
+              { id: "publications", label: nav.publications },
+              { id: "contact", label: nav.contact },
+            ]}
+          />
         )}
         <div className="header-tools">
           <ThemeToggle labels={t.ui.theme} />
@@ -51,7 +58,8 @@ export function SiteHeader({
           </nav>
         </div>
       </div>
-    </header>
+      </div>
+    </HeaderShell>
   );
 }
 
@@ -60,6 +68,8 @@ export function SiteFooter({ lang, t }: { lang: Locale; t: Dictionary }) {
     <footer className="site-footer">
       <span>© 2026 {person.name}</span>
       <span className="footer-links">
+        <a href={person.linkedin}>LinkedIn</a>
+        <a href={person.github}>GitHub</a>
         <Link href={localePath(lang, "/imprint")}>{t.ui.footer.imprint}</Link>
         <Link href={localePath(lang, "/privacy")}>{t.ui.footer.privacy}</Link>
       </span>
@@ -80,8 +90,9 @@ export function ProsePage({
   doc: { title: string; sections: { heading?: string; body: string; email?: string }[] };
 }) {
   return (
-    <div className="page">
+    <>
       <SiteHeader lang={lang} t={t} path={path} />
+      <div className="page">
       <main className="prose">
         <h1>{doc.title}</h1>
         {doc.sections.map((s, i) => (
@@ -100,6 +111,7 @@ export function ProsePage({
         </p>
       </main>
       <SiteFooter lang={lang} t={t} />
-    </div>
+      </div>
+    </>
   );
 }
