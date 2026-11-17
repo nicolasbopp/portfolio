@@ -5,24 +5,15 @@ import { THEME_STORAGE_KEY as STORAGE_KEY } from "@/lib/theme";
 
 type Theme = "light" | "dark";
 
-const darkQuery = () => window.matchMedia("(prefers-color-scheme: dark)");
-
-/** The theme currently shown: the visitor's choice if any, otherwise the system setting. */
+/** The theme currently shown: light only if the visitor chose it, dark otherwise. */
 function readTheme(): Theme {
-  const chosen = document.documentElement.dataset.theme;
-  if (chosen === "light" || chosen === "dark") return chosen;
-  return darkQuery().matches ? "dark" : "light";
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
 }
 
 function subscribe(onChange: () => void) {
-  const mq = darkQuery();
-  mq.addEventListener("change", onChange);
   const observer = new MutationObserver(onChange);
   observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-  return () => {
-    mq.removeEventListener("change", onChange);
-    observer.disconnect();
-  };
+  return () => observer.disconnect();
 }
 
 export default function ThemeToggle({ labels }: { labels: { toDark: string; toLight: string } }) {

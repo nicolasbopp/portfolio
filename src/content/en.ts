@@ -169,7 +169,7 @@ export const en: Dictionary = {
       { heading: "Contact", email: "nicolas.bopp@pm.me", body: "Or through the contact form on this site or on LinkedIn." },
       {
         heading: "Disclaimer",
-        body: "The content of this site was created with care, but I cannot guarantee that it is complete, correct or up to date. Links to external sites are provided for information; their operators are responsible for their content.",
+        body: "I keep this site as accurate and up to date as I can, but I cannot guarantee it. Links to other websites lead to content I do not control, so I am not responsible for it.",
       },
       {
         heading: "Copyright",

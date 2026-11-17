@@ -171,7 +171,7 @@ export const de: Dictionary = {
       { heading: "Kontakt", email: "nicolas.bopp@pm.me", body: "Oder über das Kontaktformular auf dieser Website oder auf LinkedIn." },
       {
         heading: "Haftungsausschluss",
-        body: "Die Inhalte dieser Website wurden mit Sorgfalt erstellt. Für Vollständigkeit, Richtigkeit und Aktualität kann ich jedoch keine Gewähr übernehmen. Links auf externe Websites dienen der Information; für deren Inhalte sind ausschliesslich die jeweiligen Betreiber verantwortlich.",
+        body: "Ich halte die Inhalte dieser Website so aktuell und korrekt wie möglich, kann dafür aber keine Garantie übernehmen. Links führen teilweise zu anderen Websites, auf deren Inhalte ich keinen Einfluss habe und für die ich nicht verantwortlich bin.",
       },
       {
         heading: "Urheberrecht",
