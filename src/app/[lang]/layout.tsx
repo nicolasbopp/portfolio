@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Atkinson_Hyperlegible_Next } from "next/font/google";
 import { getDictionary, hasLocale, locales } from "@/content";
+import { themeInitScript } from "@/lib/theme";
 import "../globals.css";
 
 const sans = Atkinson_Hyperlegible_Next({
@@ -46,7 +47,11 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   return (
-    <html lang={lang === "de" ? "de-CH" : "en"} className={sans.variable}>
+    // The init script may set data-theme before React hydrates, hence suppressHydrationWarning.
+    <html lang={lang === "de" ? "de-CH" : "en"} className={sans.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>{children}</body>
     </html>
   );

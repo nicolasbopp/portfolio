@@ -19,6 +19,7 @@ export const de: Dictionary = {
       contact: "Kontakt",
     },
     languageLabel: "Sprache",
+    theme: { toDark: "Dunkles Design einschalten", toLight: "Helles Design einschalten" },
     currently: "Aktuell",
     since: "seit",
     getInTouch: "Kontakt aufnehmen",
@@ -167,7 +168,7 @@ export const de: Dictionary = {
     title: "Impressum",
     sections: [
       { heading: "Verantwortlich für diese Website", body: "Nicolas Bopp\nBasel, Schweiz" },
-      { heading: "Kontakt", body: "Über das Kontaktformular auf dieser Website oder auf LinkedIn." },
+      { heading: "Kontakt", email: "nicolas.bopp@pm.me", body: "Oder über das Kontaktformular auf dieser Website oder auf LinkedIn." },
       {
         heading: "Haftungsausschluss",
         body: "Die Inhalte dieser Website wurden mit Sorgfalt erstellt. Für Vollständigkeit, Richtigkeit und Aktualität kann ich jedoch keine Gewähr übernehmen. Links auf externe Websites dienen der Information; für deren Inhalte sind ausschliesslich die jeweiligen Betreiber verantwortlich.",

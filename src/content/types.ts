@@ -33,6 +33,7 @@ export type Dictionary = {
     skip: string;
     nav: { label: string; skills: string; work: string; experience: string; publications: string; contact: string };
     languageLabel: string;
+    theme: { toDark: string; toLight: string };
     currently: string;
     since: string;
     getInTouch: string;
@@ -73,5 +74,5 @@ export type Dictionary = {
   education: Role[];
   skills: { area: string; items: string[] }[];
   privacy: { title: string; sections: { heading?: string; body: string }[] };
-  imprint: { title: string; sections: { heading?: string; body: string }[] };
+  imprint: { title: string; sections: { heading?: string; body: string; email?: string }[] };
 };

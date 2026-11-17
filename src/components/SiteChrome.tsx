@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { locales, person, type Dictionary, type Locale } from "@/content";
+import ThemeToggle from "./ThemeToggle";
 
 const LANGUAGE_NAMES: Record<Locale, string> = { en: "English", de: "Deutsch" };
 
@@ -31,19 +32,22 @@ export function SiteHeader({
             <a href="#contact">{t.ui.nav.contact}</a>
           </nav>
         )}
-        <nav className="lang-switch" aria-label={t.ui.languageLabel}>
-          {locales.map((l) =>
-            l === lang ? (
-              <span key={l} aria-current="true" lang={l} title={LANGUAGE_NAMES[l]}>
-                {l.toUpperCase()}
-              </span>
-            ) : (
-              <Link key={l} href={`/${l}${path}`} hrefLang={l} lang={l} title={LANGUAGE_NAMES[l]}>
-                {l.toUpperCase()}
-              </Link>
-            ),
-          )}
-        </nav>
+        <div className="header-tools">
+          <ThemeToggle labels={t.ui.theme} />
+          <nav className="lang-switch" aria-label={t.ui.languageLabel}>
+            {locales.map((l) =>
+              l === lang ? (
+                <span key={l} aria-current="true" lang={l} title={LANGUAGE_NAMES[l]}>
+                  {l.toUpperCase()}
+                </span>
+              ) : (
+                <Link key={l} href={`/${l}${path}`} hrefLang={l} lang={l} title={LANGUAGE_NAMES[l]}>
+                  {l.toUpperCase()}
+                </Link>
+              ),
+            )}
+          </nav>
+        </div>
       </div>
     </header>
   );
@@ -71,7 +75,7 @@ export function ProsePage({
   lang: Locale;
   t: Dictionary;
   path: string;
-  doc: { title: string; sections: { heading?: string; body: string }[] };
+  doc: { title: string; sections: { heading?: string; body: string; email?: string }[] };
 }) {
   return (
     <div className="page">
@@ -81,6 +85,11 @@ export function ProsePage({
         {doc.sections.map((s, i) => (
           <section key={i}>
             {s.heading && <h2>{s.heading}</h2>}
+            {s.email && (
+              <p className="prose-body">
+                <a href={`mailto:${s.email}`}>{s.email}</a>
+              </p>
+            )}
             <p className="prose-body">{s.body}</p>
           </section>
         ))}

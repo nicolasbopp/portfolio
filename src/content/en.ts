@@ -18,6 +18,7 @@ export const en: Dictionary = {
       contact: "Contact",
     },
     languageLabel: "Language",
+    theme: { toDark: "Switch to dark mode", toLight: "Switch to light mode" },
     currently: "Currently",
     since: "since",
     getInTouch: "Get in touch",
@@ -165,7 +166,7 @@ export const en: Dictionary = {
     title: "Imprint",
     sections: [
       { heading: "Responsible for this site", body: "Nicolas Bopp\nBasel, Switzerland" },
-      { heading: "Contact", body: "Through the contact form on this site or on LinkedIn." },
+      { heading: "Contact", email: "nicolas.bopp@pm.me", body: "Or through the contact form on this site or on LinkedIn." },
       {
         heading: "Disclaimer",
         body: "The content of this site was created with care, but I cannot guarantee that it is complete, correct or up to date. Links to external sites are provided for information; their operators are responsible for their content.",
