@@ -4,7 +4,7 @@ import type { Dictionary } from "./types";
 // Swiss Standard German: "ss" instead of "ß".
 export const de: Dictionary = {
   meta: {
-    title: "Nicolas Bopp, Medizininformatik",
+    title: "Nicolas Bopp – Portfolio",
     description:
       "Nicolas Bopp entwickelt Software für die klinische Forschung: Pipelines für medizinische Bildgebung, Annotationswerkzeuge und klinische Entscheidungsunterstützung.",
   },

@@ -26,6 +26,6 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Everything except API routes, Next.js internals and files with an extension.
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
+  // Everything except API routes, Next.js internals, the generated app icon and files with an extension.
+  matcher: ["/((?!api|_next|apple-icon|.*\\..*).*)"],
 };

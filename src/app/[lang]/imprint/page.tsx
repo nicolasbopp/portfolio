@@ -6,7 +6,7 @@ import { alternates, getDictionary, hasLocale } from "@/content";
 export async function generateMetadata({ params }: PageProps<"/[lang]/imprint">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
-  return { title: `${getDictionary(lang).imprint.title}, Nicolas Bopp`, alternates: alternates(lang, "/imprint") };
+  return { title: `${getDictionary(lang).imprint.title} – Nicolas Bopp`, alternates: alternates(lang, "/imprint") };
 }
 
 export default async function Imprint({ params }: PageProps<"/[lang]/imprint">) {

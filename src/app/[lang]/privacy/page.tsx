@@ -6,7 +6,7 @@ import { alternates, getDictionary, hasLocale } from "@/content";
 export async function generateMetadata({ params }: PageProps<"/[lang]/privacy">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
-  return { title: `${getDictionary(lang).privacy.title}, Nicolas Bopp`, alternates: alternates(lang, "/privacy") };
+  return { title: `${getDictionary(lang).privacy.title} – Nicolas Bopp`, alternates: alternates(lang, "/privacy") };
 }
 
 export default async function Privacy({ params }: PageProps<"/[lang]/privacy">) {

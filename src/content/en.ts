@@ -3,7 +3,7 @@ import type { Dictionary } from "./types";
 
 export const en: Dictionary = {
   meta: {
-    title: "Nicolas Bopp, medical informatics",
+    title: "Nicolas Bopp – Portfolio",
     description:
       "Nicolas Bopp builds software for clinical research: medical imaging pipelines, annotation tools and clinical decision support.",
   },
