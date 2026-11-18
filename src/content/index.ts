@@ -5,6 +5,9 @@ import type { Dictionary } from "./types";
 export { person } from "./shared";
 export type { Dictionary } from "./types";
 
+/** Public address of the site, without a trailing slash. */
+export const siteUrl = (process.env.SITE_URL ?? "https://www.nicolasbopp.dev").replace(/\/$/, "");
+
 export const locales = ["en", "de"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";

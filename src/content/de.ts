@@ -38,6 +38,10 @@ export const de: Dictionary = {
     contactAlt: "Oder erreichen Sie mich auf",
     footer: { privacy: "Datenschutz", imprint: "Impressum" },
     backHome: "Zurück zur Startseite",
+    notFound: {
+      title: "Seite nicht gefunden",
+      body: "Diese Adresse gibt es auf dieser Website nicht. Die Seite wurde vielleicht verschoben, oder der Link enthält einen Tippfehler.",
+    },
   },
   form: {
     name: "Name",
@@ -84,6 +88,18 @@ export const de: Dictionary = {
         "Prüft die Abhängigkeiten von Node.js-Projekten: was veraltet ist, was verwundbar ist und was sich seit der eigenen Version geändert hat. Gleicht Meldungen von OSV.dev mit der exakt installierten Version ab, prüft indirekte Abhängigkeiten und Kompatibilität und läuft auch als CLI.",
       stack: ["TypeScript", "Node.js", "OSV.dev"],
       links: [{ label: "noderegrets.dev", href: "https://noderegrets.dev" }],
+    },
+    {
+      title: "intelligent-scissors",
+      context: "Open-Source-Bibliothek",
+      period: "2026",
+      summary:
+        "Live-Wire-Segmentierung für den Browser: Man klickt einige Punkte um eine Struktur, und die Kontur dazwischen folgt ihren Kanten. Ich habe sie für das MRT-Annotationswerkzeug meiner Masterarbeit geschrieben und separat veröffentlicht, weil ich keine kleine, eigenständige Umsetzung fand. Sie hat keine Abhängigkeiten und liest 16-Bit-Bilddaten aus der Medizin direkt.",
+      stack: ["TypeScript"],
+      links: [
+        { label: "Live-Demo", href: "https://nicolasbopp.github.io/intelligent-scissors/" },
+        { label: "GitHub", href: "https://github.com/nicolasbopp/intelligent-scissors" },
+      ],
     },
   ],
   publications: [personalis],
@@ -147,9 +163,20 @@ export const de: Dictionary = {
   }),
   privacy: {
     title: "Datenschutzerklärung",
+    updated: "Zuletzt aktualisiert im November 2026",
     sections: [
       {
-        body: "Diese Website wird von Nicolas Bopp, Basel, Schweiz, betrieben. Sie verwendet keine Cookies, keine Analysewerkzeuge und kein Tracking.",
+        heading: "Verantwortlich",
+        email: "nicolas.bopp@pm.me",
+        body: "Nicolas Bopp, Basel, Schweiz. Schreiben Sie bei Fragen zu Ihren Daten an diese Adresse.",
+      },
+      {
+        heading: "Was diese Website nicht tut",
+        body: "Sie setzt keine Cookies, verwendet keine Analysewerkzeuge und kein Tracking. Schriften und Icons werden von dieser Website selbst ausgeliefert; beim Öffnen einer Seite geht keine Anfrage an Dritte.",
+      },
+      {
+        heading: "Design-Einstellung",
+        body: "Wenn Sie zwischen dunklem und hellem Design wechseln, wird Ihre Wahl im lokalen Speicher Ihres Browsers abgelegt, damit sie beim nächsten Besuch erhalten bleibt. Sie verlässt Ihr Gerät nicht.",
       },
       {
         heading: "Kontaktformular",
@@ -157,11 +184,11 @@ export const de: Dictionary = {
       },
       {
         heading: "Hosting",
-        body: "Der Hosting-Anbieter verarbeitet technische Daten wie IP-Adressen in Server-Logs, um die Website auszuliefern und vor Missbrauch zu schützen.",
+        body: "Die Website wird von Vercel (Vercel Inc., USA) gehostet. Vercel verarbeitet technische Daten wie Ihre IP-Adresse in Server-Logs, um die Website auszuliefern und vor Missbrauch zu schützen.",
       },
       {
         heading: "Ihre Rechte",
-        body: "Sie können Auskunft über die zu Ihnen gespeicherten Daten verlangen und diese berichtigen oder löschen lassen. Schreiben Sie mir dazu über das Kontaktformular oder auf LinkedIn.",
+        body: "Sie können Auskunft über die zu Ihnen gespeicherten Daten verlangen und diese berichtigen oder löschen lassen. Schreiben Sie dazu an die obige Adresse oder nutzen Sie das Kontaktformular.",
       },
     ],
   },
@@ -169,14 +196,22 @@ export const de: Dictionary = {
     title: "Impressum",
     sections: [
       { heading: "Verantwortlich für diese Website", body: "Nicolas Bopp\nBasel, Schweiz" },
-      { heading: "Kontakt", email: "nicolas.bopp@pm.me", body: "Oder über das Kontaktformular auf dieser Website oder auf LinkedIn." },
+      {
+        heading: "Kontakt",
+        email: "nicolas.bopp@pm.me",
+        body: "Oder über das Kontaktformular auf dieser Website oder auf LinkedIn.",
+      },
       {
         heading: "Haftungsausschluss",
         body: "Ich halte die Inhalte dieser Website so aktuell und korrekt wie möglich, kann dafür aber keine Garantie übernehmen. Links führen teilweise zu anderen Websites, auf deren Inhalte ich keinen Einfluss habe und für die ich nicht verantwortlich bin.",
       },
       {
         heading: "Urheberrecht",
-        body: "Texte und Code dieser Website stammen von Nicolas Bopp, sofern nicht anders angegeben. Die Technologie-Logos sind Marken ihrer jeweiligen Inhaber und stammen von Simple Icons.",
+        body: "Texte und Code dieser Website stammen von Nicolas Bopp, sofern nicht anders angegeben.",
+      },
+      {
+        heading: "Verwendete Werke",
+        body: "Die Schrift ist Allo von Josh Puckett, verwendet unter der SIL Open Font License. Die Technologie-Logos stammen von Simple Icons und Devicon und sind Marken ihrer jeweiligen Inhaber.",
       },
     ],
   },

@@ -27,6 +27,13 @@ export type Publication = {
   doi: string;
 };
 
+export type LegalDoc = {
+  title: string;
+  /** Line under the title, e.g. "Last updated November 2026". */
+  updated?: string;
+  sections: { heading: string; body: string; email?: string }[];
+};
+
 export type Dictionary = {
   meta: { title: string; description: string };
   ui: {
@@ -51,6 +58,7 @@ export type Dictionary = {
     contactAlt: string;
     footer: { privacy: string; imprint: string };
     backHome: string;
+    notFound: { title: string; body: string };
   };
   form: {
     name: string;
@@ -74,6 +82,6 @@ export type Dictionary = {
   experience: Role[];
   education: Role[];
   skills: { area: string; items: string[] }[];
-  privacy: { title: string; sections: { heading?: string; body: string }[] };
-  imprint: { title: string; sections: { heading?: string; body: string; email?: string }[] };
+  privacy: LegalDoc;
+  imprint: LegalDoc;
 };

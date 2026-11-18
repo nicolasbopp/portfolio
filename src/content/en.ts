@@ -36,6 +36,10 @@ export const en: Dictionary = {
     contactAlt: "Or reach me on",
     footer: { privacy: "Privacy", imprint: "Imprint" },
     backHome: "Back to the home page",
+    notFound: {
+      title: "Page not found",
+      body: "This address does not exist on this site. The page may have moved, or the link may be mistyped.",
+    },
   },
   form: {
     name: "Name",
@@ -82,6 +86,18 @@ export const en: Dictionary = {
         "Dependency health checks for Node.js projects: what is outdated, what is vulnerable, and what changed since your version. Matches OSV.dev advisories to the exact installed version, checks transitive dependencies and peer compatibility, and ships as a CLI.",
       stack: ["TypeScript", "Node.js", "OSV.dev"],
       links: [{ label: "noderegrets.dev", href: "https://noderegrets.dev" }],
+    },
+    {
+      title: "intelligent-scissors",
+      context: "Open-source library",
+      period: "2026",
+      summary:
+        "Live-wire segmentation for the browser: click a few points around a structure and the outline between them snaps to its edges. I wrote it for the MRI annotation tool in my thesis and released it on its own because I could not find a small standalone implementation. It has no dependencies and reads 16-bit medical images directly.",
+      stack: ["TypeScript"],
+      links: [
+        { label: "Live demo", href: "https://nicolasbopp.github.io/intelligent-scissors/" },
+        { label: "GitHub", href: "https://github.com/nicolasbopp/intelligent-scissors" },
+      ],
     },
   ],
   publications: [personalis],
@@ -145,9 +161,20 @@ export const en: Dictionary = {
   }),
   privacy: {
     title: "Privacy notice",
+    updated: "Last updated November 2026",
     sections: [
       {
-        body: "This site is run by Nicolas Bopp, Basel, Switzerland. It does not use cookies, analytics or tracking.",
+        heading: "Who is responsible",
+        email: "nicolas.bopp@pm.me",
+        body: "Nicolas Bopp, Basel, Switzerland. Write to this address with any question about your data.",
+      },
+      {
+        heading: "What this site does not do",
+        body: "It sets no cookies, runs no analytics and does not track you. Fonts and icons are served from this site itself, so opening a page sends no request to third parties.",
+      },
+      {
+        heading: "Theme setting",
+        body: "If you switch between dark and light mode, your choice is saved in the local storage of your browser so it is kept on your next visit. It never leaves your device.",
       },
       {
         heading: "Contact form",
@@ -155,11 +182,11 @@ export const en: Dictionary = {
       },
       {
         heading: "Hosting",
-        body: "The hosting provider processes technical data such as IP addresses in server logs to deliver the site and protect it against abuse.",
+        body: "The site is hosted by Vercel (Vercel Inc., USA). Vercel processes technical data such as your IP address in server logs to deliver the site and protect it against abuse.",
       },
       {
         heading: "Your rights",
-        body: "You can ask what data I hold about you, and have it corrected or deleted, by writing to me through the contact form or on LinkedIn.",
+        body: "You can ask what data I hold about you and have it corrected or deleted. Write to the address above or use the contact form.",
       },
     ],
   },
@@ -167,14 +194,22 @@ export const en: Dictionary = {
     title: "Imprint",
     sections: [
       { heading: "Responsible for this site", body: "Nicolas Bopp\nBasel, Switzerland" },
-      { heading: "Contact", email: "nicolas.bopp@pm.me", body: "Or through the contact form on this site or on LinkedIn." },
+      {
+        heading: "Contact",
+        email: "nicolas.bopp@pm.me",
+        body: "Or through the contact form on this site or on LinkedIn.",
+      },
       {
         heading: "Disclaimer",
         body: "I keep this site as accurate and up to date as I can, but I cannot guarantee it. Links to other websites lead to content I do not control, so I am not responsible for it.",
       },
       {
         heading: "Copyright",
-        body: "Text and code on this site are by Nicolas Bopp unless stated otherwise. Technology logos are trademarks of their owners and are shown from Simple Icons.",
+        body: "Text and code on this site are by Nicolas Bopp unless stated otherwise.",
+      },
+      {
+        heading: "Credits",
+        body: "The typeface is Allo by Josh Puckett, used under the SIL Open Font License. Technology logos come from Simple Icons and Devicon and are trademarks of their owners.",
       },
     ],
   },

@@ -3,7 +3,8 @@ import ContactForm from "@/components/ContactForm";
 import TechIcon from "@/components/TechIcon";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import BackToTop from "@/components/BackToTop";
-import { getDictionary, hasLocale, localePath, person } from "@/content";
+import HeroName from "@/components/HeroName";
+import { getDictionary, hasLocale, localePath, person, siteUrl } from "@/content";
 
 function highlightSelf(authors: string) {
   const [before, after] = authors.split("Bopp N.");
@@ -22,10 +23,38 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   if (!hasLocale(lang)) notFound();
   const t = getDictionary(lang);
   const current = t.experience.filter((r) => r.since);
-  const [first, last] = person.name.split(" ");
+
+  // Structured data so search engines read this page as a person's profile.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    inLanguage: lang,
+    mainEntity: {
+      "@type": "Person",
+      name: person.name,
+      jobTitle: t.profile.role,
+      description: t.meta.description,
+      url: siteUrl,
+      sameAs: [person.linkedin, person.github],
+      address: { "@type": "PostalAddress", addressLocality: "Basel", addressCountry: "CH" },
+      affiliation: {
+        "@type": "CollegeOrUniversity",
+        name: "FHNW University of Applied Sciences and Arts Northwestern Switzerland",
+      },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "FHNW University of Applied Sciences and Arts Northwestern Switzerland",
+      },
+      knowsAbout: ["Medical informatics", "Medical imaging", "Clinical decision support", "Software engineering"],
+    },
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\u003c") }}
+      />
       <a className="skip-link" href="#main">
         {t.ui.skip}
       </a>
@@ -35,9 +64,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <div className="hero-field" id="hero-field">
         <div className="page">
           <section className="hero" id="top" aria-labelledby="hero-title">
-            <h1 id="hero-title" className="hero-name">
-              <span>{first}</span> <span>{last}</span>
-            </h1>
+            <HeroName id="hero-title" name={person.name} />
             <div className="hero-about">
               <p className="hero-role">
                 {t.profile.role}
