@@ -73,7 +73,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
       <div className="page">
         <main id="main" tabIndex={-1}>
-          <section className="section section-stacked" id="skills" aria-labelledby="skills-title">
+          <section className="section" id="skills" aria-labelledby="skills-title">
             <h2 id="skills-title" className="section-title">
               {t.ui.sections.skills}
             </h2>
