@@ -3,7 +3,6 @@ import ContactForm from "@/components/ContactForm";
 import TechIcon from "@/components/TechIcon";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import BackToTop from "@/components/BackToTop";
-import HeroName from "@/components/HeroName";
 import { getDictionary, hasLocale, localePath, person, siteUrl } from "@/content";
 
 function highlightSelf(authors: string) {
@@ -22,6 +21,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const t = getDictionary(lang);
+  const [first, last] = person.name.split(" ");
   const current = t.experience.filter((r) => r.since);
 
   // Structured data so search engines read this page as a person's profile.
@@ -64,7 +64,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <div className="hero-field" id="hero-field">
         <div className="page">
           <section className="hero" id="top" aria-labelledby="hero-title">
-            <HeroName id="hero-title" name={person.name} />
+            <h1 id="hero-title" className="hero-name">
+              <span>{first}</span> <span>{last}</span>
+            </h1>
             <div className="hero-about">
               <p className="hero-role">
                 {t.profile.role}

@@ -344,51 +344,8 @@ a:hover {
   margin-left: -0.04em;
 }
 
-.hero-word {
+.hero-name span {
   display: block;
-}
-
-/* --p: pointer proximity, --w: the ripple on load. Both run from 0 to 1. */
-@property --p {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 0;
-}
-
-@property --w {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 0;
-}
-
-.hero-name [data-letter] {
-  --k: max(var(--p), var(--w));
-  display: inline-block;
-  font-variation-settings:
-    "wght" calc(850 - 560 * var(--k)),
-    "ROND" calc(100 - 100 * var(--k)),
-    "opsz" 32;
-  transition: --p 520ms var(--ease-out);
-  animation: hero-ripple 900ms var(--ease-out) backwards;
-}
-
-@keyframes hero-ripple {
-  0% {
-    --w: 0;
-  }
-  35% {
-    --w: 1;
-  }
-  100% {
-    --w: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-name [data-letter] {
-    animation: none;
-    transition-duration: 160ms;
-  }
 }
 
 .hero-about {
